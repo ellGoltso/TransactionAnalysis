@@ -20,7 +20,7 @@ def get_greetings(date: datetime.datetime) -> str:
     return greeting
 
 
-def get_data_from_excel_file(date: datetime.datetime):
+def get_data_from_excel_file(date: datetime.datetime) -> pd.DataFrame:
     """ Принимает дату и возвращает DataFrame с операциями с начала месяца до указанной даты """
 
     excel_data = pd.read_excel("data/operations.xlsx")
@@ -32,7 +32,7 @@ def get_data_from_excel_file(date: datetime.datetime):
     return filtered_data
 
 
-def get_general_information(data) -> list:
+def get_general_information(data: pd.DataFrame) -> list[dict]:
     """ Принимает DataFrame, группирует по номеру карты и
     возвращает список словарей с информацией по каждой карте """
 
@@ -51,7 +51,7 @@ def get_general_information(data) -> list:
     return info_list
 
 
-def get_top_five_transactions(data) -> list[dict]:
+def get_top_five_transactions(data: pd.DataFrame) -> list[dict]:
     """ Принимает DataFrame с операциями и возвращает список словарей с топ 5 операциями по сумме """
 
     sorted_data = data.sort_values(by='Сумма операции с округлением', ascending=False)
@@ -67,9 +67,9 @@ def get_top_five_transactions(data) -> list[dict]:
 
 
 
-date = datetime.datetime(2021, 12, 15)
-test = get_data_from_excel_file(date)
+# date = datetime.datetime(2021, 12, 15)
+# test = get_data_from_excel_file(date)
 # info = get_general_information(test)
-top = get_top_five_transactions(test)
-
-print(top)
+# top = get_top_five_transactions(test)
+#
+# print(top)
