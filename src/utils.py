@@ -20,10 +20,17 @@ def get_greetings(date: datetime.datetime) -> str:
     return greeting
 
 
+def get_df_data(path: str = "data/operations.xlsx") -> pd.DataFrame:
+    """ Опционально принимает путь к excel файлу и возвращает DataFrame с данными """
+
+    excel_data = pd.read_excel(path)
+    return excel_data
+
+
 def get_data_from_excel_file(date: datetime.datetime) -> pd.DataFrame:
     """ Принимает дату и возвращает DataFrame с операциями с начала месяца до указанной даты """
 
-    excel_data = pd.read_excel("data/operations.xlsx")
+    excel_data = get_df_data()
     excel_data['Дата операции'] = pd.to_datetime(excel_data['Дата операции'], dayfirst=True)
     end_date = datetime.datetime(date.year, date.month, date.day, 23, 59, 59)
     start_date = datetime.datetime(date.year, date.month, 1)

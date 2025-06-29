@@ -1,14 +1,10 @@
-import json
-import re
+from src.utils import get_df_data
 
 
-import pandas as pd
+def get_json_transfers_data():
+    """ Возвращает json с транзакциями, которые относятся к переводам физлицам """
 
-
-def get_data():
-    """  """
-
-    data = pd.read_excel("data/operations.xlsx")
+    data = get_df_data()
     transfers = data.loc[(data['Категория'] == 'Переводы') & (data['Описание'].str.contains(r'^\b\D+\b \D\.$', regex = True))]
     json_data = transfers.to_json(orient='records', force_ascii = False)
     return json_data
