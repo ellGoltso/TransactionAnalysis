@@ -6,7 +6,12 @@ from src.external_api import get_exchange_rate, get_share_price
 
 
 def get_json_data(date: datetime.datetime):
-    """  """
+    """ Принимает дату и время возвращает json ответ с:
+            приветствием
+            информацией о картах с начала месяца
+            топ 5 транзакций с начала месяца
+            курсом валюты
+            стоимостью акций """
 
     greeting = {"greeting": get_greetings(date)}
     df_data = get_data_from_excel_file(date)

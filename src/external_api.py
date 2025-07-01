@@ -43,7 +43,7 @@ def get_exchange_rate() -> list[dict]:
         url = f"https://api.apilayer.com/exchangerates_data/latest?symbols=RUB&base={i}"
         response = (requests.request("GET", url, headers=headers)).json()
         rate = response["rates"]
-        dict_rate = {"currency": i, "rate": rate["RUB"]}
+        dict_rate = {"currency": i, "rate": round(rate["RUB"], 2)}
         currency_rates.append(dict_rate)
 
     return currency_rates

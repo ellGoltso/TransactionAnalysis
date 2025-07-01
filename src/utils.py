@@ -3,7 +3,6 @@ import datetime
 import pandas as pd
 
 
-
 def get_greetings(date: datetime.datetime) -> str:
     """ Принимает дату и время и возвращает строку приветствия в зависимости от времени суток """
 
