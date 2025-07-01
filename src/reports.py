@@ -1,11 +1,11 @@
 from typing import Optional
+from src.decorators import write_to_file
 
 import pandas as pd
 import datetime
 
-from src.utils import get_df_data
 
-
+@write_to_file()
 def spending_by_category(transactions: pd.DataFrame,
                          category: str,
                          date: Optional[str] = None) -> pd.DataFrame:
@@ -21,7 +21,7 @@ def spending_by_category(transactions: pd.DataFrame,
     else:
         date_obj = datetime.datetime.strptime(date, '%d.%m.%Y')
     date_obj = datetime.datetime(date_obj.year, date_obj.month, date_obj.day, hour=23, minute=59, second=59)
-    # transactions['Дата платежа'] = pd.DataFrame({'Дата платежа' : pd.to_datetime(transactions['Дата платежа'])})
+
     transactions['Дата операции'] = pd.to_datetime(transactions['Дата операции'], dayfirst=True)
     start_date = date_obj - datetime.timedelta(days=90)
     start_date = datetime.datetime(start_date.year, start_date.month, start_date.day, hour=0, minute=0, second=0)
