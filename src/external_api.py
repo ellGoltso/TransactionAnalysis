@@ -1,12 +1,12 @@
+import json
 import os
 
 import requests
 from dotenv import load_dotenv
-import json
 
 
 def get_share_price() -> list[dict]:
-    """ Возвращает список словарей с названиями акций и ценами на них """
+    """Возвращает список словарей с названиями акций и ценами на них"""
 
     with open("user_settings.json") as f:
         settings = json.load(f)
@@ -26,7 +26,7 @@ def get_share_price() -> list[dict]:
 
 
 def get_exchange_rate() -> list[dict]:
-    """ Возвращает список словарей с названием валюты и курсом относительно рубля """
+    """Возвращает список словарей с названием валюты и курсом относительно рубля"""
 
     with open("user_settings.json") as f:
         settings = json.load(f)
@@ -34,9 +34,7 @@ def get_exchange_rate() -> list[dict]:
 
     load_dotenv()
     api_key = os.getenv("APIKEY_EXCHANGE")
-    headers = {
-        "apikey": api_key
-    }
+    headers = {"apikey": api_key}
 
     currency_rates = []
     for i in currency:
@@ -47,4 +45,3 @@ def get_exchange_rate() -> list[dict]:
         currency_rates.append(dict_rate)
 
     return currency_rates
-

@@ -1,8 +1,9 @@
-from src.decorators import write_to_file
-
 import datetime
-import pandas as pd
 import json
+
+import pandas as pd
+
+from src.decorators import write_to_file
 
 
 def test_write_to_file():
@@ -15,7 +16,9 @@ def test_write_to_file():
     with open("data/test_data.json", "r", encoding="utf-8") as f:
         content = json.load(f)
 
-    pd.testing.assert_frame_equal(pd.DataFrame(content), pd.DataFrame({'Column_1': [1, 2, 3, 4, 5], 'Column_2': [5, 4, 3, 2, 1]}))
+    pd.testing.assert_frame_equal(
+        pd.DataFrame(content), pd.DataFrame({"Column_1": [1, 2, 3, 4, 5], "Column_2": [5, 4, 3, 2, 1]})
+    )
 
     @write_to_file("data/test_exc.json")
     def test_exc():
@@ -27,5 +30,3 @@ def test_write_to_file():
         content = json.load(f)
 
     assert content == "test_exc error: 'datetime.datetime' object has no attribute 'to_json'."
-
-
