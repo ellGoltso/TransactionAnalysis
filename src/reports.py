@@ -1,9 +1,17 @@
 import datetime
+import logging
 from typing import Optional
 
 import pandas as pd
 
 from src.decorators import write_to_file
+
+reports_logger = logging.getLogger("reports")
+file_handler = logging.FileHandler("logs/reports.log", "w", encoding="utf-8")
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler.setFormatter(file_formatter)
+reports_logger.addHandler(file_handler)
+reports_logger.setLevel(logging.DEBUG)
 
 
 @write_to_file()
@@ -24,6 +32,7 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
     transactions["Дата операции"] = pd.to_datetime(transactions["Дата операции"], dayfirst=True)
     start_date = date_obj - datetime.timedelta(days=90)
     start_date = datetime.datetime(start_date.year, start_date.month, start_date.day, hour=0, minute=0, second=0)
+    reports_logger.info("Фильтрация операций по категории")
     filtered_data = transactions.loc[
         (transactions["Дата операции"] >= start_date)
         & (transactions["Дата операции"] <= date_obj)
