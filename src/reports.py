@@ -1,4 +1,5 @@
 import datetime
+import json
 import logging
 from typing import Optional
 
@@ -15,13 +16,18 @@ reports_logger.setLevel(logging.DEBUG)
 
 
 @write_to_file()
-def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
+def spending_by_category(transactions: pd.DataFrame, category: str = None, date: Optional[str] = None) -> pd.DataFrame:
     """Функция принимает на вход:
         датафрейм с транзакциями,
-        название категории,
+        опционально название категории(если не передана берется по умолчанию из json файла user_settings.json по ключу: user_category),
         опциональную дату.
     Если дата не передана, то берется текущая дата.
     Функция возвращает траты по заданной категории за последние три месяца (от переданной даты)"""
+
+    if category is None:
+        with open("user_settings.json", "r", encoding="utf-8") as f:
+            settings = json.load(f)
+        category = settings["user_category"]
 
     if date is None:
         date_obj = datetime.date.today()
